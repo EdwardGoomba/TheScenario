@@ -7,7 +7,7 @@ export class AppService {
   constructor(private readonly dataDao: DataDao) {}
 
   async getAll() {
-    return [{ data: '123' }];
+    return await this.dataDao.getAll();
   }
 
   async get(id: string) {
