@@ -4,15 +4,25 @@ import { DataDao } from './data.dao';
 
 @Injectable()
 export class AppService {
-
-  constructor(
-    private readonly dataDao: DataDao
-  ){}
-
+  constructor(private readonly dataDao: DataDao) {}
 
   async getAll() {
-    return [{data: '123'}]
+    return [{ data: '123' }];
+  }
 
-    //return await this.dataDao.getAll()
+  async get(id: string) {
+    return await this.dataDao.get(id);
+  }
+
+  async create(data: any) {
+    return await this.dataDao.create(data);
+  }
+
+  async delete(id: string) {
+    return await this.dataDao.delete(id);
+  }
+
+  async update(id: string, data: any) {
+    return await this.dataDao.update(id, data);
   }
 }

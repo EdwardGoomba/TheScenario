@@ -9,6 +9,8 @@ The following tools need to be installed on your development machine:
 - Docker Desktop
 - docker-compose
 
+Note - you may need to add the docker command to your `PATH` manually.
+
 ## Submission Steps:
 
 1. Fork or degit (link https://github.com/Rich-Harris/degit) this repository.
