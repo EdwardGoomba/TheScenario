@@ -1,8 +1,14 @@
-const notesData = [
-  { companyName: 'Fluint', notes: 'A short note here.' },
-]
+// either move this into a frontend types folder or create a shareable frontend / backend type system
+interface NoteData {
+  companyName: string;
+  notes: string;
+}
 
-export function NotesTable() {
+interface NotesTableProps {
+  notesData: NoteData[];
+}
+
+export function NotesTable({ notesData }: NotesTableProps) {
   return (
     <div className="px-4 py-4 sm:px-6 lg:px-8 bg-slate-50 rounded-md">
       <div className="sm:flex sm:items-center">
@@ -39,21 +45,26 @@ export function NotesTable() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {notesData.map((note) => (
-                  <tr key={note.companyName}>
-                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                      {note.companyName}
-                    </td>
-                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-gray-900 sm:pl-0">
-                      {note.notes}
-                    </td>
-                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                      <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                        View details
-                      </a>
-                    </td>
-                  </tr>
-                ))}
+                {notesData ? (
+                  <>
+                    {notesData.map((note) => (
+                      <tr key={note.companyName}>
+                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                          {note.companyName}
+                        </td>
+                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-gray-900 sm:pl-0">
+                          {note.notes}
+                        </td>
+                        <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                          <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                            View details
+                          </a>
+                        </td>
+                      </tr>
+                    ))}
+                  </>
+                ) : <p>Loading</p>}
+
               </tbody>
             </table>
           </div>

@@ -18,7 +18,7 @@ function classNames(...classes) {
 }
 
 const Dashboard = () => {
-  const [data, setData] = useState<Response>();
+  const [notesData, setNotesData] = useState<Response>();
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const revalidatedData = async () => {
@@ -28,7 +28,7 @@ const Dashboard = () => {
     });
 
     const jsonResult = await result.json();
-    setData(jsonResult);
+    setNotesData(jsonResult);
   }
 
 
@@ -203,7 +203,7 @@ const Dashboard = () => {
         </div>
         <main className="py-10 lg:pl-72">
           <div className="px-4 sm:px-6 lg:px-8">
-            <NotesTable />
+            <NotesTable notesData={notesData} />
           </div>
         </main>
       </div>
