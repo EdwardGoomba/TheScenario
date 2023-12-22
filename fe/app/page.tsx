@@ -7,6 +7,7 @@ import {
   DocumentDuplicateIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
+import { NotesTable } from './components/notesTable';
 
 const navigation = [
   { name: 'Notes', href: '/', icon: DocumentDuplicateIcon, current: false },
@@ -202,7 +203,7 @@ const Dashboard = () => {
         </div>
         <main className="py-10 lg:pl-72">
           <div className="px-4 sm:px-6 lg:px-8">
-            {/* Your content */}
+            <NotesTable />
           </div>
         </main>
       </div>
