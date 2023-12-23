@@ -2,7 +2,7 @@ import { Fragment, useRef } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Formik } from 'formik';
 
-export default function AddNoteModal({
+export function AddEditNoteModal({
   addNoteOpen,
   setAddNoteOpen,
   draftNote,
@@ -70,11 +70,14 @@ export default function AddNoteModal({
                     </Dialog.Title>
                     <Formik
                       initialValues={draftNote}
-                      onSubmit={async ({ setSubmitting }) => {
+                      onSubmit={async () => {
                         console.log('Submitting: ', draftNote);
 
-                        const result = await fetch(`http://127.0.01:3000/data/create`, {
-                          method: 'POST',
+                        const url = mode === 'create' ? `http://127.0.01:3000/data/create` : `http://127.0.01:3000/data/update/${draftNote._id}`;
+                        const method = mode === 'create' ? 'POST' : 'PATCH';
+
+                        const result = await fetch(url, {
+                          method: method,
                           headers: {
                             'Content-Type': 'application/json',
                           },
@@ -82,10 +85,9 @@ export default function AddNoteModal({
                         });
 
                         if (result.ok) {
-                          console.log('Successfully added note.');
+                          console.log('Successfully added / edited note.');
                           await revalidatedData();
                           setAddNoteOpen(false);
-                          setSubmitting(false);
                         }
                       }
                     }>

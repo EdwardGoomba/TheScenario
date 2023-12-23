@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { Layout } from './components/layout';
 import { NotesTable } from './components/notesTable';
 import { NotesHeader } from './components/notesHeader';
-import AddNoteModal from './components/addNoteModal';
+import { AddEditNoteModal } from './components/addEditNoteModal';
 
 interface NoteData {
   _id: string;
@@ -45,7 +45,7 @@ const Dashboard = () => {
         <NotesHeader setAddNoteOpen={setAddNoteOpen} />
         <NotesTable notesData={notesData} />
       </div>
-      <AddNoteModal
+      <AddEditNoteModal
         addNoteOpen={addNoteOpen}
         setAddNoteOpen={setAddNoteOpen}
         draftNote={draftNote}

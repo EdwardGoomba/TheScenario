@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Layout } from '../components/layout'
 import DeleteNoteModal from '../components/deleteNoteModal';
-import AddNoteModal from '../components/addNoteModal';
+import { AddEditNoteModal } from '../components/addEditNoteModal';
 
 interface NoteData {
   _id: string;
@@ -17,19 +17,19 @@ export default function NoteDetails({ params }: { params: { note: string } }) {
   const [editNoteOpen, setEditNoteOpen] = useState(false);
   const { note } = params;
 
-  const revalidatedData = async () => {
+  const revalidatedData = useCallback(async () => {
     const result = await fetch(`http://127.0.01:3000/data/${note}`, {
-        method: 'GET',
-        // mode: 'no-cors',
+      method: 'GET',
+      // mode: 'no-cors',
     });
 
     const jsonResult = await result.json();
     setNoteData(jsonResult);
-  }
+  }, [note]);
 
   useEffect(() => {
-    revalidatedData()
-  }, [])
+    revalidatedData();
+  }, [revalidatedData]);
 
   const { companyName, notes } = noteData || {};
 
@@ -72,7 +72,7 @@ export default function NoteDetails({ params }: { params: { note: string } }) {
           noteId={note}
         />
         {noteData && (
-          <AddNoteModal
+          <AddEditNoteModal
             addNoteOpen={editNoteOpen}
             setAddNoteOpen={setEditNoteOpen}
             draftNote={noteData}
