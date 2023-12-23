@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Layout } from '../components/layout'
+import DeleteNoteModal from '../components/deleteNoteModal';
 
 interface NoteData {
   _id: string;
@@ -11,6 +12,7 @@ interface NoteData {
 
 export default function NoteDetails({ params }: { params: { note: string } }) {
   const [noteData, setNoteData] = useState<NoteData>();
+  const [deleteNoteOpen, setDeleteNoteOpen] = useState(false);
   const { note } = params;
 
   const revalidatedData = async () => {
@@ -26,8 +28,6 @@ export default function NoteDetails({ params }: { params: { note: string } }) {
   useEffect(() => {
     revalidatedData()
   }, [])
-
-  console.log('noteData: ', noteData)
 
   const { companyName, notes } = noteData || {};
 
@@ -52,6 +52,7 @@ export default function NoteDetails({ params }: { params: { note: string } }) {
                 <button
                   type="button"
                   className="ml-3 inline-flex items-center rounded-md border-2 border-red-600 px-3 py-2 text-sm font-semibold text-red-600 hover:text-white shadow-sm hover:bg-red-600"
+                  onClick={() => setDeleteNoteOpen(true)}
                 >
                   Delete
                 </button>
@@ -62,6 +63,11 @@ export default function NoteDetails({ params }: { params: { note: string } }) {
             </div>
           </>
         ) : <p>Loading...</p>}
+        <DeleteNoteModal
+          deleteNoteOpen={deleteNoteOpen}
+          setDeleteNoteOpen={setDeleteNoteOpen}
+          noteId={note}
+        />
       </div>
     </Layout>
   )
