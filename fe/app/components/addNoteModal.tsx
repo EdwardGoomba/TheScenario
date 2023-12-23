@@ -7,23 +7,27 @@ export default function AddNoteModal({
   setAddNoteOpen,
   draftNote,
   setDraftNote,
-  revalidatedData
+  revalidatedData,
+  mode,
 }: {
   addNoteOpen: boolean;
   setAddNoteOpen: (open: boolean) => void;
   draftNote: any;
   setDraftNote: (draftNote: any) => void;
   revalidatedData: () => void;
+  mode: 'create' | 'edit';
 }) {
   const cancelButtonRef = useRef(null)
 
   const cancelAddingNote = () => {
     setAddNoteOpen(false);
-    setDraftNote({
-      _id: '',
-      companyName: '',
-      notes: '',
-    });
+    if (mode === 'create') {
+      setDraftNote({
+        _id: '',
+        companyName: '',
+        notes: '',
+      });
+    }
   }
 
   const addNoteDisabled = (draftNote.companyName === '' || draftNote.notes === '');
@@ -104,6 +108,7 @@ export default function AddNoteModal({
                                   ...draftNote,
                                   companyName: e.target.value,
                                 })}
+                                value={draftNote.companyName}
                               />
                             </div>
                           </div>
@@ -121,6 +126,7 @@ export default function AddNoteModal({
                                   ...draftNote,
                                   notes: e.target.value,
                                 })}
+                                value={draftNote.notes}
                               />
                             </div>
                           </div>

@@ -51,6 +51,7 @@ const Dashboard = () => {
         draftNote={draftNote}
         setDraftNote={setDraftNote}
         revalidatedData={revalidatedData}
+        mode={'create'}
       />
     </Layout>
   )

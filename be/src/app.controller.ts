@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Delete, Param, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Delete,
+  Patch,
+  Param,
+  Body,
+} from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller('data')
@@ -22,8 +30,10 @@ export class AppController {
     return this.appService.delete(id);
   }
 
-  // consider using put or patch instead of post
-  @Post('update/:id') update(id: string) {
-    return this.appService.update(id, { data: 'test' });
+  @Patch('update/:id') update(
+    @Param('id') id: string,
+    @Body() data: { companyName: string; notes: string },
+  ) {
+    return this.appService.update(id, data);
   }
 }

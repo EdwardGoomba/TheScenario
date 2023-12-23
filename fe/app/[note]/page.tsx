@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Layout } from '../components/layout'
 import DeleteNoteModal from '../components/deleteNoteModal';
+import AddNoteModal from '../components/addNoteModal';
 
 interface NoteData {
   _id: string;
@@ -13,6 +14,7 @@ interface NoteData {
 export default function NoteDetails({ params }: { params: { note: string } }) {
   const [noteData, setNoteData] = useState<NoteData>();
   const [deleteNoteOpen, setDeleteNoteOpen] = useState(false);
+  const [editNoteOpen, setEditNoteOpen] = useState(false);
   const { note } = params;
 
   const revalidatedData = async () => {
@@ -46,6 +48,7 @@ export default function NoteDetails({ params }: { params: { note: string } }) {
                 <button
                   type="button"
                   className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                  onClick={() => setEditNoteOpen(true)}
                 >
                   Edit
                 </button>
@@ -68,6 +71,16 @@ export default function NoteDetails({ params }: { params: { note: string } }) {
           setDeleteNoteOpen={setDeleteNoteOpen}
           noteId={note}
         />
+        {noteData && (
+          <AddNoteModal
+            addNoteOpen={editNoteOpen}
+            setAddNoteOpen={setEditNoteOpen}
+            draftNote={noteData}
+            setDraftNote={setNoteData}
+            revalidatedData={revalidatedData}
+            mode={'edit'}
+          />
+        )}
       </div>
     </Layout>
   )
